@@ -1,0 +1,87 @@
+#include <iostream>
+#include <string>
+
+class Airport {
+private:
+    std::string name;         // Название аэропорта
+    double ticket_price;      // Стоимость билета
+    int total_seats;          // Общее количество мест
+    int sold_tickets;         // Количество проданных билетов
+
+public:
+    // Конструктор
+    Airport(const std::string& name, double ticket_price, int total_seats)
+        : name(name), ticket_price(ticket_price), total_seats(total_seats), sold_tickets(0) {}
+
+    // Методы доступа (свойства)
+
+    // Геттер для получения названия аэропорта
+    std::string getName() const {
+        return name;
+    }
+
+    // Геттер для получения стоимости билета
+    double getTicketPrice() const {
+        return ticket_price;
+    }
+
+    // Геттер для получения общего числа мест
+    int getTotalSeats() const {
+        return total_seats;
+    }
+
+    // Геттер для получения количества проданных билетов
+    int getSoldTickets() const {
+        return sold_tickets;
+    }
+
+    // Сеттер для изменения названия аэропорта (только запись)
+    void setName(const std::string& new_name) {
+        name = new_name;
+    }
+
+    // Сеттер для изменения стоимости билета (только запись)
+    void setTicketPrice(double new_ticket_price) {
+        ticket_price = new_ticket_price;
+    }
+
+    // Сеттер для изменения общего числа мест (только запись)
+    void setTotalSeats(int new_total_seats) {
+        total_seats = new_total_seats;
+    }
+
+    // Метод для продажи билетов
+    void sellTicket(int quantity = 1) {
+        if (sold_tickets + quantity <= total_seats) {
+            sold_tickets += quantity;
+            std::cout << quantity << " билетов продано. Всего проданных билетов: " << sold_tickets << "." << std::endl;
+        } else {
+            std::cout << "Недостаточно свободных мест для продажи указанного количества билетов." << std::endl;
+            std::cout << "На данный момент имеется только " << total_seats << " свободных мест." << std::endl;
+        }
+    }
+
+    // Метод для подсчета общей выручки
+    double totalRevenue() const {
+        return sold_tickets * ticket_price;
+    }
+};
+
+int main() {
+    // Создаем объект аэропорта
+    Airport airport("Шереметьево", 5000, 300);
+
+    // Используем методы для продажи билетов
+    airport.sellTicket(400);
+    std::cout << "Общая стоимость проданных билетов: " << airport.totalRevenue() << std::endl;
+
+    // Изменяем название аэропорта и стоимость билета
+    airport.setName("Домодедово");
+    airport.setTicketPrice(6000);
+
+    // Проверяем измененные значения через геттеры
+    std::cout << "Новое название аэропорта: " << airport.getName() << std::endl;
+    std::cout << "Новая стоимость билета: " << airport.getTicketPrice() << std::endl;
+
+    return 0;
+}
